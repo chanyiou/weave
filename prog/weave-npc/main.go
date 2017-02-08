@@ -127,7 +127,10 @@ func root(cmd *cobra.Command, args []string) {
 				handleError(npc.AddNamespace(obj.(*coreapi.Namespace)))
 			},
 			DeleteFunc: func(obj interface{}) {
-				handleError(npc.DeleteNamespace(obj.(*coreapi.Namespace)))
+				switch obj := obj.(type) {
+				case *coreapi.Namespace:
+					handleError(npc.DeleteNamespace(obj))
+				}
 			},
 			UpdateFunc: func(old, new interface{}) {
 				handleError(npc.UpdateNamespace(old.(*coreapi.Namespace), new.(*coreapi.Namespace)))
@@ -139,7 +142,10 @@ func root(cmd *cobra.Command, args []string) {
 				handleError(npc.AddPod(obj.(*coreapi.Pod)))
 			},
 			DeleteFunc: func(obj interface{}) {
-				handleError(npc.DeletePod(obj.(*coreapi.Pod)))
+				switch obj := obj.(type) {
+				case *coreapi.Pod:
+					handleError(npc.DeletePod(obj))
+				}
 			},
 			UpdateFunc: func(old, new interface{}) {
 				handleError(npc.UpdatePod(old.(*coreapi.Pod), new.(*coreapi.Pod)))
@@ -151,7 +157,10 @@ func root(cmd *cobra.Command, args []string) {
 				handleError(npc.AddNetworkPolicy(obj.(*extnapi.NetworkPolicy)))
 			},
 			DeleteFunc: func(obj interface{}) {
-				handleError(npc.DeleteNetworkPolicy(obj.(*extnapi.NetworkPolicy)))
+				switch obj := obj.(type) {
+				case *extnapi.NetworkPolicy:
+					handleError(npc.DeleteNetworkPolicy(obj))
+				}
 			},
 			UpdateFunc: func(old, new interface{}) {
 				handleError(npc.UpdateNetworkPolicy(old.(*extnapi.NetworkPolicy), new.(*extnapi.NetworkPolicy)))
